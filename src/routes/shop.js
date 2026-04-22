@@ -1,12 +1,22 @@
 export default async function (fastify) {
   // Route to display all items with pagination
   fastify.get("/:tag?", async (request, reply) => {
-    const { page = 1, limit = 10 } = request.query; // Defaults: page 1, 10 items per page
+    const { page = 1, limit = 10, q } = request.query; // Defaults: page 1, 10 items per page
     const { tag } = request.params;
-    //Filtering tags
-    const query = tag ? {tags: tag} : {}; 
+
+    const query = {};
+    //Filtering search queries
+    if (tag){
+      query.tags = tag;
+    } 
+
+    if (q) {
+      query.$text = { $search: q };
+    }
+
     //Implementing database connection
     const allItems = await fastify.Item.find(query)
+    .sort({ name: 1 })
     .skip((page - 1 ) * limit)
     .limit(limit); 
 

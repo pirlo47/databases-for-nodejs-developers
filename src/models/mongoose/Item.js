@@ -12,4 +12,11 @@ const ItemSchema = new mongoose.Schema(
     }
 );
 
+ItemSchema.index({ tags: 1 }); 
+ItemSchema.index({ name: 1 });
+
+//adding the text index 
+ItemSchema.index({name: "text"})
+
+
 export const Item = mongoose.model("Item", ItemSchema)

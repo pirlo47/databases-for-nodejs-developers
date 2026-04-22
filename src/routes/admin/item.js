@@ -48,7 +48,7 @@ export default async function (fastify) {
 
     try {
       await fastify.Item.findByIdAndDelete(id); 
-      request.session.set("messages", [{type: "success", text:"successgully deleted item"}]);
+      request.session.set("messages", [{type: "success", text:"successfully deleted item"}]);
     } catch (err) {
       request.session.set("messages", [{type: "danger", text:"failed to delete item"}]);
       fastify.log.error("Error deleting item");
