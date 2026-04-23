@@ -24,6 +24,11 @@ export default (sequelize, DataTypes) => {
         const hashedPassword = await argon2.hash(plainPassword); 
         this.password = hashedPassword; 
     }
+
+    //static method 
+    User.prototype.comparePassword = async function(plainPassword){
+        return await argon2.verify(this.password, plainPassword); 
+    }; 
     //Associatias and calling the fucntions
     User.associate = (models) => {
         User.hasMany(models.Order, {foreignKey: "userId", as: "orders"}); 
