@@ -1,5 +1,3 @@
-import { DataTypes } from "sequelize";
-
 export default (seqelize, DataTypes) => {
     const Order = seqelize.define("Order", {
         userId: {
@@ -8,7 +6,7 @@ export default (seqelize, DataTypes) => {
         }, 
         email: {
             type: DataTypes.STRING,
-            allowNull: False
+            allowNull: false
         }, 
         status: {
             type: DataTypes.STRING,
