@@ -18,7 +18,13 @@ export const config = {
     options: {
       logging: false
     }
-  }, 
+  },
+
+  //Adding Redis Configuration
+  redis: {
+    host: "localhost",
+    port: 6379
+  },
   
   session: {
     // Secret key to encrypt client side sessions.
