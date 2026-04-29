@@ -6,7 +6,11 @@ async function redisPlugin(fastify, config) {
 
   // TODO: Connect to Redis and update the status
   try {
-    const redis = new Redis(config.host, config.port);
+    const redis = new Redis({ 
+      host: config.host, 
+      port: config.port 
+    });
+    
     redisStatus = "connected"; 
     fastify.log.info("Connected to Redis");
     fastify.decorate("redis", redis); 

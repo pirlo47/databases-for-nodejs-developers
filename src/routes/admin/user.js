@@ -110,17 +110,18 @@ export default async function (fastify) {
     const { id } = request.params;
 
     try {
-      if(!user){
+      const user = await fastify.models.User.findByPk(id);
+        if(!user){
           request.session.set("messages", [
             { type: "danger", text: "Could not find user" }
           ]);
-          return reply.redriect("/admin/user"); 
-      }
-      request.session.set("user", {id: user.id, email: user.email });
-      request.session.set("messages", [
-        { type: "Success", text: `Impersonating ${user.email}` }
-      ]);
-      return reply.redirect("/"); // Redirect after impersonation
+          return reply.redirect("/admin/user"); 
+        }
+        request.session.set("user", {id: user.id, email: user.email });
+        request.session.set("messages", [
+            { type: "success", text: `User impersonated successfully`}
+          ]);
+        return reply.redirect("/"); // Redirect after impersonation
     } catch (error) {
       request.log.error(error);
       request.session.set("messages", [

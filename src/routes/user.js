@@ -83,18 +83,11 @@ export default async function (fastify) {
 
   // GET /logout - Clear the session and redirect to the login page
   fastify.get("/logout", async (req, reply) => {
-    try {
-      req.session.delete(); // Clear the session
-      req.session.set("messages", [
-        { type: "success", text: "You have been logged out." }
-      ]);
-      return reply.redirect("/user/login");
-    } catch (error) {
-      req.session.set("messages", [
-        { type: "danger", text: "Failed to log out." }
-      ]);
-      req.log.error("Error logging out:", error);
-      return reply.redirect("/");
-    }
+    fastify.clearSession(req); //Clear the session
+    req.session.set("messages", [
+      { type: "success", text: "You have been logged out."}
+    ]);
+    return reply.redirect("/user/login");
+    
   });
 }
